@@ -34,7 +34,7 @@ class CustomUserDetails extends FormBase {
         $form['show_button'] = [
             '#type' => 'submit',
             '#value' => 'Show Details',
-            '#submit' => array('fun'),
+            '#submit' => ['::fun'],
         ];
         $form['submit'] = [
             '#type' => 'submit',
