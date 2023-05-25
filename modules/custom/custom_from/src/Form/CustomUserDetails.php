@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\InvokeCommand;
+use Drupal\Code\Database\Database;
 
 
 class CustomUserDetails extends FormBase {
@@ -34,7 +35,7 @@ class CustomUserDetails extends FormBase {
         $form['show_button'] = [
             '#type' => 'submit',
             '#value' => 'Show Details',
-            '#submit' => ['::fun'],
+            '#submit' => ['::display'],
         ];
         $form['submit'] = [
             '#type' => 'submit',
@@ -51,7 +52,7 @@ class CustomUserDetails extends FormBase {
         \Drupal::messenger()->addMessage($this->student_names[0]);
     }
 
-    public function fun(array &$form, FormStateInterface $form_state){
+    public function display(array &$form, FormStateInterface $form_state){
         \Drupal::messenger()->addMessage("clicked");
 
     }
