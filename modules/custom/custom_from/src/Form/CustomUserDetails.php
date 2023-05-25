@@ -11,7 +11,8 @@ use Drupal\Code\Database\Database;
 
 class CustomUserDetails extends FormBase {
 
-    private $student_names = array();
+    private $student_name = '';
+
 
     public function getFormId() {
         return "custom_user_details_form";
@@ -35,7 +36,8 @@ class CustomUserDetails extends FormBase {
         $form['show_button'] = [
             '#type' => 'submit',
             '#value' => 'Show Details',
-            '#submit' => ['::display'],
+            '#submit' => ['::show_dets'],
+
         ];
         $form['submit'] = [
             '#type' => 'submit',
@@ -48,12 +50,28 @@ class CustomUserDetails extends FormBase {
 
     public function submitForm(array &$form, FormStateInterface $form_state) {
         \Drupal::messenger()->addMessage("User Details Submitted Successfully");
-        array_push($this->student_names, $form_state->getValue('name'));
-        \Drupal::messenger()->addMessage($this->student_names[0]);
+        // array_push($this->student_names, $form_state->getValue('name'));
+        // $this->student_name= $form_state->getValue('name');
+        // \Drupal::messenger()->addMessage($this->student_name);
+
+        // TODO: save to db
+
+        $name = $this->student_name;
+        $attend = $form_state->getValue('attendance')=='present'?1:0;
+
+        $query = \Drupal::database();
+        $query->insert('info')->fields(array('name'=> $name, 'attendance'=>$attend))->execute();
+
+        \Drupal::messenger()->addMessage('data is added');
+
     }
 
-    public function display(array &$form, FormStateInterface $form_state){
-        \Drupal::messenger()->addMessage("clicked");
+    public function show_dets(array &$form, FormStateInterface $form_state){
+
+        // $form_state->setRedirect('/student_list', ['node'=>1]);
+        $url = Url::fromRoute('student_list', ['node'=>1]);
+        return new RedirectResponse($url->toString());
 
     }
+
 }
