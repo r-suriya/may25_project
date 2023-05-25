@@ -1,0 +1,7 @@
+students.studentsmsg:
+  path: '/students'
+  defaults:
+    _controller: 'Drupal\students\Controller\StudentController::message'
+    _title: 'Students management system'
+  requirements:
+    _permission: 'access content'

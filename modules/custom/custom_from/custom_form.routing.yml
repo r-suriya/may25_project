@@ -1,0 +1,7 @@
+custom-user-form:
+  path: '/attendance'
+  defaults:
+    _form: '\Drupal\custom_form\Form\CustomUserDetails'
+    _title: 'Student details form'
+  requirements:
+    _permission: 'access content'
